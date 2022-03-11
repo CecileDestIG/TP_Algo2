@@ -3,6 +3,7 @@ import java.util.Collections;
 import java.util.Objects;
 
 public class Instance {
+
     private Coord startingP; //point de départ
     private int k; //k>=0, nombre de pas disponibles
     private boolean[][] plateau; //orientation: plateau[0][0] en haut à gauche, et plateau[ligne][col]
@@ -204,7 +205,15 @@ public class Instance {
         //retourne vrai ssi s est une solution valide (une solution est valide ssi c'est une liste de coordonnées de taille au plus k+1, telle que deux coordonnées consécutives sont à distance 1,
         // et les coordonnées ne sortent pas du plateau)
 
-        //à compléter
+
+        if(s.size() > this.k + 1 || s == null){return false;}
+
+        for(int i = 0; i<s.size(); i++){
+            if(!s.get(i).estDansPlateau(this.getNbL(), this.getNbC())){return false;}
+            if(i <= s.size() - 1){
+                if(!s.get(i).estADistanceUn(s.get(i+1))){return false;}
+            }
+        }
         return true;
     }
 
@@ -213,9 +222,14 @@ public class Instance {
         //prerequis : s est valide (et donc !=null)
         //action : retourne le nombre de pièces ramassées par s (et ne doit pas modifier this ni s)
 
-        //à compléter
+        int coinCounter = 0;
 
-        return 0;
+        for(Coord coordinate : s){
+            if(this.plateau[coordinate.getL()][coordinate.getC()]){
+                coinCounter++;
+            }
+        }
+        return coinCounter;
     }
 
 
@@ -256,7 +270,7 @@ public class Instance {
         //avec la pièce 0 en haut à droite, la pièce 1 en bas à gauche, et la pièce 2 en bas à droite,
         //on doit retourner (0,2,1)
 
-        //a compléter
+
 
         return null;
     }
