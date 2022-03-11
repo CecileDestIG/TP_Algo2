@@ -100,6 +100,22 @@ public class Instance {
     }
 
 
+    private int getPieceNumber(Coord coord){
+
+        int pieceNumber = 0;
+        if(!plateau[coord.getL()][coord.getC()]){return -1;}
+
+        for(int l = 0;  l < this.getNbL() ;l++){
+            for(int c = 0; c < this.getNbC(); c++){
+                if(coord.getC() == c && coord.getL() == l){
+                    return pieceNumber;
+                }
+                if(plateau[l][c]){pieceNumber++;}
+            }
+        }
+        return pieceNumber;
+    }
+
     public ArrayList<Coord> getListeCoordPieces() {
         if(listeCoordPieces==null){
         ArrayList<Coord> listeCoordPieces = new ArrayList<>();
@@ -269,10 +285,32 @@ public class Instance {
         //x..x
         //avec la pièce 0 en haut à droite, la pièce 1 en bas à gauche, et la pièce 2 en bas à droite,
         //on doit retourner (0,2,1)
+        ArrayList<Integer> orderedPieceList = new ArrayList<>();
+        ArrayList<Coord> listeCoordPiecesCopy = new ArrayList<>(this.listeCoordPieces);
+        int localMinimumIndex = -1;
+        int localMinimumDistance = Integer.MAX_VALUE;
+        Coord lastCoord = new Coord(this.startingP);
+
+        for(int i = 0; i < this.listeCoordPieces.size(); i++){
+            for(int j = 0; j < listeCoordPiecesCopy.size(); j++){
+
+                int distance = lastCoord.distanceFrom(listeCoordPiecesCopy.get(j));
+                if(localMinimumDistance > distance){
+                    localMinimumDistance = distance;
+                    localMinimumIndex = j;
+                }
+            }
+            orderedPieceList.add(this.getPieceNumber(listeCoordPiecesCopy.get(localMinimumIndex)));
+            lastCoord = listeCoordPiecesCopy.get(localMinimumIndex);
+            listeCoordPiecesCopy.remove(localMinimumIndex);
+            localMinimumDistance = Integer.MAX_VALUE;
+
+        }
 
 
 
-        return null;
+
+        return orderedPieceList;
     }
 
 

@@ -83,7 +83,8 @@ class App {
 
         Solution sg1 = Algos.greedySolver(in1);
         Solution sfpt1 = Algos.algoFPT1(new InstanceDec(in1,3));
-        System.out.println("valeur de greedy : " + in1.evaluerSolution(sg1));
+        System.out.println("valeur de permut : " + in1.greedyPermut());
+        //System.out.println("valeur de greedy : " + in1.evaluerSolution(sg1));
         if(sfpt1 == null)
             System.out.println("valeur de fpt :  null");
         else
