@@ -26,8 +26,52 @@ public class Algos {
         //Rappel : si c==0, on peut retourner la solution égale au point de départ puisque l'on est pas obligé d'utiliser les k pas
         // (on peut aussi retourner une solution plus longue si on veut)
         //Remarque : quand vous aurez codé la borneSup, pensez à l'utiliser dans cet algorithme pour ajouter un cas de base
+        boolean res = false;
+        Solution solution = null;
 
-        //à compléter
+
+        if(id.c == 0){return new Solution(id.i.getStartingP());}
+
+        if(id.i.getK() <= 0){return null;}
+
+        if(id.i.getStartingP().getL() -1 > 0){
+
+            InstanceDec instanceCopy = new InstanceDec(new Instance(id.i),id.c);
+            instanceCopy.i.setStartingP(new Coord(id.i.getStartingP().getL() - 1,id.i.getStartingP().getC()));
+            solution = algoFPT1(instanceCopy);
+            if(solution == null){ return solution;}
+        }
+
+        if(id.i.getStartingP().getL() +1 < id.i.getNbL()){
+
+            InstanceDec instanceCopy = new InstanceDec(new Instance(id.i),id.c);
+            instanceCopy.i.setStartingP(new Coord(id.i.getStartingP().getL() + 1,id.i.getStartingP().getC()));
+            solution = algoFPT1(instanceCopy);
+            if(solution == null){ return solution;}
+        }
+
+        if(id.i.getStartingP().getC() -1 > 0){
+
+            InstanceDec instanceCopy = new InstanceDec(new Instance(id.i),id.c);
+            instanceCopy.i.setStartingP(new Coord(id.i.getStartingP().getL(),id.i.getStartingP().getC() - 1));
+            solution = algoFPT1(instanceCopy);
+            if(solution == null){ return solution;}
+        }
+
+        if(id.i.getStartingP().getC() + 1 > id.i.getNbC()){
+
+            InstanceDec instanceCopy = new InstanceDec(new Instance(id.i),id.c);
+            instanceCopy.i.setStartingP(new Coord(id.i.getStartingP().getL() - 1,id.i.getStartingP().getC() + 1));
+            solution = algoFPT1(instanceCopy);
+            if(solution == null){ return solution;}
+        }
+
+
+
+
+
+
+
 
         return null;
     }
