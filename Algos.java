@@ -231,7 +231,7 @@ public class Algos {
                 //Move and decrement the nb of steps
                 instanceCopy.i.setStartingP(new Coord(idMainCopy.i.getStartingP().getL() - 1,idMainCopy.i.getStartingP().getC()));
                 instanceCopy.i.setK(instanceCopy.i.getK()-1);
-                solution = algoFPT1(instanceCopy);
+                solution = algoFPT1DP(instanceCopy,table);
                 if(solution != null){
                     solution.add(0,idMainCopy.i.getStartingP());
                     table.put(id,solution);
@@ -245,7 +245,7 @@ public class Algos {
                 //Move and decrement the nb of steps
                 instanceCopy.i.setStartingP(new Coord(idMainCopy.i.getStartingP().getL() + 1,idMainCopy.i.getStartingP().getC()));
                 instanceCopy.i.setK(instanceCopy.i.getK()-1);
-                solution = algoFPT1(instanceCopy);
+                solution = algoFPT1DP(instanceCopy,table);
 
                 System.out.println("nb piece copy :" + instanceCopy.c);
                 if(solution != null){
@@ -262,7 +262,7 @@ public class Algos {
                 //Move and decrement the nb of steps
                 instanceCopy.i.setStartingP(new Coord(idMainCopy.i.getStartingP().getL(),idMainCopy.i.getStartingP().getC() -1));
                 instanceCopy.i.setK(instanceCopy.i.getK()-1);
-                solution = algoFPT1(instanceCopy);
+                solution = algoFPT1DP(instanceCopy,table);
 
                 if(solution != null){
                     solution.add(0,idMainCopy.i.getStartingP());
@@ -278,7 +278,7 @@ public class Algos {
                 //Move and decrement the nb of steps
                 instanceCopy.i.setStartingP(new Coord(idMainCopy.i.getStartingP().getL() - 1,idMainCopy.i.getStartingP().getC() +1));
                 instanceCopy.i.setK(instanceCopy.i.getK()-1);
-                solution = algoFPT1(instanceCopy);
+                solution = algoFPT1DP(instanceCopy,table);
                 if(solution != null){
                     solution.add(0,idMainCopy.i.getStartingP());
                     table.put(id,solution);
