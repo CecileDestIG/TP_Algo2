@@ -398,7 +398,7 @@ public class Instance {
             }
         }
         Collections.sort(distanceBetweenPiecesList);
-        distanceBetweenPiecesList.add(distMin,0);
+        distanceBetweenPiecesList.add(0,distMin);
 
         /*How many piece we can reach*/
         int nbStep = 0;
