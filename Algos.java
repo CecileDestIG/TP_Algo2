@@ -234,6 +234,7 @@ public class Algos {
                 solution = algoFPT1(instanceCopy);
                 if(solution != null){
                     solution.add(0,idMainCopy.i.getStartingP());
+                    table.put(id,solution);
                     return solution;
                 }
             }
@@ -249,6 +250,7 @@ public class Algos {
                 System.out.println("nb piece copy :" + instanceCopy.c);
                 if(solution != null){
                     solution.add(0,idMainCopy.i.getStartingP());
+                    table.put(id,solution);
                     return solution;
                 }
             }
@@ -264,6 +266,7 @@ public class Algos {
 
                 if(solution != null){
                     solution.add(0,idMainCopy.i.getStartingP());
+                    table.put(id,solution);
                     return solution;
                 }
             }
@@ -278,10 +281,11 @@ public class Algos {
                 solution = algoFPT1(instanceCopy);
                 if(solution != null){
                     solution.add(0,idMainCopy.i.getStartingP());
+                    table.put(id,solution);
                     return solution;
                 }
             }
-
+            table.put(id,null);
             return null;
         }
     }
