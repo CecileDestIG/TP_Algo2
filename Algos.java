@@ -296,7 +296,8 @@ public class Algos {
         //doit faire appel à algoFPT1DP
 
         //à completer
-        return null;
+        HashMap<InstanceDec,Solution> table = new HashMap<InstanceDec,Solution>();
+        return algoFPT1DP(id,table);
 
     }
 
