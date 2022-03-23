@@ -19,6 +19,76 @@ public class Algos {
     }
 
 
+    /*
+    public static boolean algoTestFPT(InstanceDec id){
+        boolean res = false;
+        boolean res1 = false;
+        boolean res2 = false;
+        boolean res3 = false;
+        boolean res4 = false;
+
+        int b = 0;
+        ArrayList<Coord> listePiece = new ArrayList<>(id.i.getListeCoordPieces());
+        for(int i = 0; i<listePiece.size();i++){
+            if (id.i.getStartingP().getC()==listePiece.get(i).getC() && id.i.getStartingP().getL()==listePiece.get(i).getL()){
+                b=1;
+            }
+        }
+        int npp = id.c - b;
+        int kp = id.i.getK() - 1;
+
+        if (npp == 0){
+            return true;
+        }
+        if (id.i.getK()==0){
+            return false;
+        }
+        //cas on se déplace vers la gauche
+        if(id.i.getStartingP().getL() -1 > 0){
+            System.out.println("gauche");
+            InstanceDec instanceCopy = new InstanceDec(new Instance(id.i),id.c);
+            System.out.println(new Coord(id.i.getStartingP().getL() - 1,id.i.getStartingP().getC()));
+            instanceCopy.i.setStartingP(new Coord(id.i.getStartingP().getL() - 1,id.i.getStartingP().getC()));
+            instanceCopy.c=npp;
+            instanceCopy.i.setK(kp);
+            res1 = res || algoTestFPT(instanceCopy);
+        }
+        //cas on se déplace vers la droite
+        if(id.i.getStartingP().getL() +1 < id.i.getNbL()){
+            System.out.println("droite");
+            InstanceDec instanceCopy = new InstanceDec(new Instance(id.i),id.c);
+
+            System.out.println(new Coord(id.i.getStartingP().getL() + 1,id.i.getStartingP().getC()));
+            instanceCopy.i.setStartingP(new Coord(id.i.getStartingP().getL() + 1,id.i.getStartingP().getC()));
+            instanceCopy.c=npp;
+            instanceCopy.i.setK(kp);
+            res2 = res || algoTestFPT(instanceCopy);
+        }
+        //cas on se déplace vers le bas
+        if(id.i.getStartingP().getC() + 1 > id.i.getNbC()){
+            System.out.println("bas");
+            InstanceDec instanceCopy = new InstanceDec(new Instance(id.i),id.c);
+
+            System.out.println(new Coord(id.i.getStartingP().getL(),id.i.getStartingP().getC() + 1));
+            instanceCopy.i.setStartingP(new Coord(id.i.getStartingP().getL(),id.i.getStartingP().getC() + 1));
+            instanceCopy.c=npp;
+            instanceCopy.i.setK(kp);
+            res3 = res || algoTestFPT(instanceCopy);
+        }
+        //cas on se déplace vers le haut
+        if(id.i.getStartingP().getC() -1 > 0){
+            System.out.println("haut");
+            InstanceDec instanceCopy = new InstanceDec(new Instance(id.i),id.c);
+            System.out.println(new Coord(id.i.getStartingP().getL(),id.i.getStartingP().getC() - 1));
+            instanceCopy.i.setStartingP(new Coord(id.i.getStartingP().getL(),id.i.getStartingP().getC() - 1));
+            instanceCopy.c=npp;
+            instanceCopy.i.setK(kp);
+            res4 = res || algoTestFPT(instanceCopy);
+        }
+        res = res1 || res2 || res3 || res4;
+        return res;
+    }
+*/
     public static Solution algoFPT1(InstanceDec id) {
         //algorithme qui décide id (c'est à dire si opt(id.i) >= id.c) en branchant (en 4^k) dans les 4 directions pour chacun des k pas
         //retourne une solution de valeur >= c si une telle solution existe, et null sinon
