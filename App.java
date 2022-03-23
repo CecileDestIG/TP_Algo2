@@ -70,7 +70,7 @@ class App {
         };
 
 
-        Coord sp1 = new Coord(1, 3);
+        Coord sp1 = new Coord(1, 1);
         int k1 = 6;
         Instance in1 = new Instance(p1, sp1, k1);
         System.out.println("instance in1 :\n" + in1);
@@ -95,6 +95,10 @@ class App {
         else
             System.out.println("valeur de fpt : " + in1.evaluerSolution(sfpt1));
 
+
+        System.out.println("Born sup");
+        (new InstanceDec(in1,3)).i.borneSup();
+
         /************************************************
          **** tests sur instances  plus grandes        ******
          *************************************************/
@@ -117,7 +121,7 @@ class App {
 
 
         // in6 : une instance que l'on configure comme on souhaite
-
+        /*
         boolean[][] p6 = new boolean[40][40];
         int[] l6 = {2,2,5,8,10,15,15,15,15,15,16,36,38,39};
         int[] c6 = {1,4,20,2,6,15,16,17,18,19,19,36,38,39};
@@ -130,6 +134,7 @@ class App {
         Instance in6 = new Instance(p6,sp6,k6);
         int sg6 = in6.evaluerSolution(Algos.greedySolver(in6));
         Solution solutionDP = Algos.algoFPT1DP(new InstanceDec(in6,10), new HashMap<>());
+         */
 
         /*
         int sg6 = in6.evaluerSolution(Algos.greedySolver(in6));

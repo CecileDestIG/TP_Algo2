@@ -96,6 +96,8 @@ public class Algos {
         //Rappel : si c==0, on peut retourner la solution égale au point de départ puisque l'on est pas obligé d'utiliser les k pas
         // (on peut aussi retourner une solution plus longue si on veut)
         //Remarque : quand vous aurez codé la borneSup, pensez à l'utiliser dans cet algorithme pour ajouter un cas de base
+        if(id.i.borneSup()<id.c){return null;};
+
         boolean res = false;
         Solution solution = null;
         InstanceDec idMainCopy = new InstanceDec(new Instance(id.i),id.c);

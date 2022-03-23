@@ -226,7 +226,8 @@ public class Instance {
 
         for(int i = 0; i<s.size(); i++){
             if(!s.get(i).estDansPlateau(this.getNbL(), this.getNbC())){return false;}
-            if(i <= s.size() - 1){
+
+            if(i < s.size() - 1){
                 if(!s.get(i).estADistanceUn(s.get(i+1))){return false;}
             }
         }
@@ -381,8 +382,36 @@ public class Instance {
         //(vous pouvez réfléchir au fait que c'est bien une borne supérieure)
         //(pour des exemples précis, cf les tests)
 
+        /*Stock and order all distances*/
         ArrayList<Integer> distanceBetweenPiecesList = new ArrayList<>();
-        distanceBetweenPiecesList.add( this.getStartingP().getC() - this)
+        int distMin = Integer.MAX_VALUE;
+
+        for(Coord pieceCoord : this.listeCoordPieces){
+            if(pieceCoord.distanceFrom(this.getStartingP()) < distMin){
+                distMin = pieceCoord.distanceFrom(this.getStartingP());
+            }
+        }
+
+        for(int i = 0; i<this.listeCoordPieces.size();i++){
+            for(int j = i +1; j<this.listeCoordPieces.size(); j++){
+                distanceBetweenPiecesList.add(this.listeCoordPieces.get(i).distanceFrom(this.listeCoordPieces.get(j)));
+            }
+        }
+        Collections.sort(distanceBetweenPiecesList);
+        distanceBetweenPiecesList.add(distMin,0);
+
+        /*How many piece we can reach*/
+        int nbStep = 0;
+        int nbOfCollectedPieces = 0;
+
+        for(int distance : distanceBetweenPiecesList){
+            if(nbStep + distance <= this.getK()){
+                nbOfCollectedPieces++;
+                nbStep = nbStep + distance;
+            }
+        }
+        System.out.println(distanceBetweenPiecesList.size());
+        System.out.println(nbOfCollectedPieces);
         return 1;
     }
 }
