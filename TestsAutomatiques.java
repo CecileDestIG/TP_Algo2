@@ -181,6 +181,8 @@ class TestsAutomatiques {
         res.add(new Coord(0,1));
         res.add(new Coord(0,0));
         Solution s =  Algos.algoFPT1(id0);
+        System.out.println("FPT value");
+        System.out.println(s);
         if(s != null && s.equals(res))
             return 1;
         else

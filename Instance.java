@@ -410,8 +410,6 @@ public class Instance {
                 nbStep = nbStep + distance;
             }
         }
-        System.out.println(distanceBetweenPiecesList.size());
-        System.out.println(nbOfCollectedPieces);
-        return 1;
+        return nbOfCollectedPieces;
     }
 }

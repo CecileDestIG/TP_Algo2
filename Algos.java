@@ -197,6 +197,11 @@ public class Algos {
             return table.get(id);
         }
         else{
+            if(id.i.borneSup()<id.c){
+                table.put(id,null);
+                return null;
+            };
+
             boolean res = false;
             Solution solution = null;
             InstanceDec idMainCopy = new InstanceDec(new Instance(id.i),id.c);
@@ -209,11 +214,13 @@ public class Algos {
 
             //On a toutes les pièces
             if(idMainCopy.c <= 0){
+                table.put(id,new Solution(idMainCopy.i.getStartingP()));
                 return new Solution(idMainCopy.i.getStartingP());
             }
 
             //On a plus de pas, retourner la courante non?
             if(idMainCopy.i.getK() <= 0){
+                table.put(id,null);
                 return null;
             }
 
@@ -225,14 +232,10 @@ public class Algos {
                 instanceCopy.i.setStartingP(new Coord(idMainCopy.i.getStartingP().getL() - 1,idMainCopy.i.getStartingP().getC()));
                 instanceCopy.i.setK(instanceCopy.i.getK()-1);
                 solution = algoFPT1(instanceCopy);
-                table.put(id,solution);
-
                 if(solution != null){
                     solution.add(0,idMainCopy.i.getStartingP());
                     return solution;
                 }
-
-
             }
             //Si on peux aller en bas
             if(idMainCopy.i.getStartingP().getL() +1 < idMainCopy.i.getNbL()){
@@ -242,8 +245,8 @@ public class Algos {
                 instanceCopy.i.setStartingP(new Coord(idMainCopy.i.getStartingP().getL() + 1,idMainCopy.i.getStartingP().getC()));
                 instanceCopy.i.setK(instanceCopy.i.getK()-1);
                 solution = algoFPT1(instanceCopy);
-                table.put(id,solution);
 
+                System.out.println("nb piece copy :" + instanceCopy.c);
                 if(solution != null){
                     solution.add(0,idMainCopy.i.getStartingP());
                     return solution;
@@ -258,7 +261,6 @@ public class Algos {
                 instanceCopy.i.setStartingP(new Coord(idMainCopy.i.getStartingP().getL(),idMainCopy.i.getStartingP().getC() -1));
                 instanceCopy.i.setK(instanceCopy.i.getK()-1);
                 solution = algoFPT1(instanceCopy);
-                table.put(id,solution);
 
                 if(solution != null){
                     solution.add(0,idMainCopy.i.getStartingP());
@@ -274,8 +276,6 @@ public class Algos {
                 instanceCopy.i.setStartingP(new Coord(idMainCopy.i.getStartingP().getL() - 1,idMainCopy.i.getStartingP().getC() +1));
                 instanceCopy.i.setK(instanceCopy.i.getK()-1);
                 solution = algoFPT1(instanceCopy);
-                table.put(id,solution);
-
                 if(solution != null){
                     solution.add(0,idMainCopy.i.getStartingP());
                     return solution;
