@@ -327,13 +327,13 @@ public class Instance {
         //k=10, il faut retourner (0,1)(0,2)(0,3)(1,3)(2,3)(2,2)(2,1)(2,0)  (dans ce cas là les plus courts sont aussi uniques,
         // et on s'arrête avant d'avoir fait k pas car on a tout collecté)
         //listeCoordPieces
-        int kcopy = k;
+                int kcopy = k;
         int nbCollectedPiece = 0;
         int currentGoalPieceIndex = 0;
         Coord currentPosition = new Coord(this.startingP);
         Solution solution = new Solution(currentPosition);
 
-        while(k>0 && nbCollectedPiece < this.listeCoordPieces.size()){
+        while(kcopy>0 && nbCollectedPiece < this.listeCoordPieces.size()){
             //on est sur une piece
             if(currentPosition.equals(this.listeCoordPieces.get( permut.get(currentGoalPieceIndex)))){
                 nbCollectedPiece++;
@@ -344,14 +344,14 @@ public class Instance {
                 if(lDirection != 0){
                     currentPosition = new Coord(currentPosition.getL() - lDirection/Math.abs(lDirection), currentPosition.getC());
                     solution.add(currentPosition);
-                    k--;
+                    kcopy--;
                 }
 
                 int cDirection = currentPosition.getC() - this.listeCoordPieces.get(permut.get(currentGoalPieceIndex)).getC();
                 if(cDirection != 0){
                     currentPosition = new Coord(currentPosition.getL(), currentPosition.getC()- cDirection/Math.abs(cDirection));
                     solution.add(currentPosition);
-                    k--;
+                    kcopy--;
                 }
             }
         }
