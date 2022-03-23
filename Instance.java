@@ -53,10 +53,10 @@ public class Instance {
             }
         }
 
-        plateau=p2;
-        startingP=new Coord(i.startingP);
-        k = i.k;
-        listeCoordPieces = new ArrayList<>();
+        this.plateau=p2;
+        this.startingP=new Coord(i.startingP);
+        this.k = i.k;
+        this.listeCoordPieces = new ArrayList<>();
         for(Coord c : i.listeCoordPieces){
             listeCoordPieces.add(new Coord(c) );
         }
@@ -133,7 +133,7 @@ public class Instance {
 
 
     public boolean piecePresente(Coord c) {
-        return plateau[c.getL()][c.getC()];
+        return this.plateau[c.getL()][c.getC()];
     }
 
     public void retirerPiece(Coord c){
@@ -256,10 +256,15 @@ public class Instance {
         // (et donc permut peut être vide, mais pas null, si il n'y a pas de pièces)
 
         //retourne le nombre de pas qu'il faudrait pour ramasser toutes les pièces dans l'ordre de permut
+        int nbStepsToCollectAll  = 0;
+        ArrayList<Coord> listCoordPiece = this.getListeCoordPieces();
+        Coord currentPosition = listCoordPiece.get(permut.get(0));
 
-        //à compléter
-
-        return 0;
+        for (int i = 1; i<permut.size(); i++){
+            nbStepsToCollectAll = nbStepsToCollectAll + Math.abs(currentPosition.getL()- listCoordPiece.get(permut.get(i)).getL()) + Math.abs(currentPosition.getC()- listCoordPiece.get(permut.get(i)).getC());
+            currentPosition = listCoordPiece.get(permut.get(i));
+        }
+        return nbStepsToCollectAll;
     }
 
     /************************************************
@@ -376,9 +381,8 @@ public class Instance {
         //(vous pouvez réfléchir au fait que c'est bien une borne supérieure)
         //(pour des exemples précis, cf les tests)
 
-        //à compléter
-
-
-        return 0;
+        ArrayList<Integer> distanceBetweenPiecesList = new ArrayList<>();
+        distanceBetweenPiecesList.add( this.getStartingP().getC() - this)
+        return 1;
     }
 }

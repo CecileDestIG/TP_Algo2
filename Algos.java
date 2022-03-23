@@ -98,50 +98,81 @@ public class Algos {
         //Remarque : quand vous aurez codé la borneSup, pensez à l'utiliser dans cet algorithme pour ajouter un cas de base
         boolean res = false;
         Solution solution = null;
+        InstanceDec idMainCopy = new InstanceDec(new Instance(id.i),id.c);
 
-
-        if(id.c == 0){return new Solution(id.i.getStartingP());}
-
-        if(id.i.getK() <= 0){return null;}
-
-        if(id.i.getStartingP().getL() -1 > 0){
-
-            InstanceDec instanceCopy = new InstanceDec(new Instance(id.i),id.c);
-            instanceCopy.i.setStartingP(new Coord(id.i.getStartingP().getL() - 1,id.i.getStartingP().getC()));
-            solution = algoFPT1(instanceCopy);
-            if(solution == null){ return solution;}
+        //Sommes nous sur une pièce ?
+        if(idMainCopy.i.piecePresente(idMainCopy.i.getStartingP())){
+            idMainCopy.c = idMainCopy.c - 1;
+            idMainCopy.i.retirerPiece(idMainCopy.i.getStartingP());
         }
 
-        if(id.i.getStartingP().getL() +1 < id.i.getNbL()){
-
-            InstanceDec instanceCopy = new InstanceDec(new Instance(id.i),id.c);
-            instanceCopy.i.setStartingP(new Coord(id.i.getStartingP().getL() + 1,id.i.getStartingP().getC()));
-            solution = algoFPT1(instanceCopy);
-            if(solution == null){ return solution;}
+        //On a toutes les pièces
+        if(idMainCopy.c <= 0){
+            return new Solution(idMainCopy.i.getStartingP());
         }
 
-        if(id.i.getStartingP().getC() -1 > 0){
-
-            InstanceDec instanceCopy = new InstanceDec(new Instance(id.i),id.c);
-            instanceCopy.i.setStartingP(new Coord(id.i.getStartingP().getL(),id.i.getStartingP().getC() - 1));
-            solution = algoFPT1(instanceCopy);
-            if(solution == null){ return solution;}
+        //On a plus de pas, retourner la courante non?
+        if(idMainCopy.i.getK() <= 0){
+            return null;
         }
 
-        if(id.i.getStartingP().getC() + 1 > id.i.getNbC()){
+        //Si on peux aller en haut
+        if(idMainCopy.i.getStartingP().getL() -1 >= 0){
 
-            InstanceDec instanceCopy = new InstanceDec(new Instance(id.i),id.c);
-            instanceCopy.i.setStartingP(new Coord(id.i.getStartingP().getL() - 1,id.i.getStartingP().getC() + 1));
+            InstanceDec instanceCopy = new InstanceDec(new Instance(idMainCopy.i),idMainCopy.c);
+            //Move and decrement the nb of steps
+            instanceCopy.i.setStartingP(new Coord(idMainCopy.i.getStartingP().getL() - 1,idMainCopy.i.getStartingP().getC()));
+            instanceCopy.i.setK(instanceCopy.i.getK()-1);
             solution = algoFPT1(instanceCopy);
-            if(solution == null){ return solution;}
+            if(solution != null){
+                solution.add(0,idMainCopy.i.getStartingP());
+                return solution;
+            }
+        }
+        //Si on peux aller en bas
+        if(idMainCopy.i.getStartingP().getL() +1 < idMainCopy.i.getNbL()){
+
+            InstanceDec instanceCopy = new InstanceDec(new Instance(idMainCopy.i),idMainCopy.c);
+            //Move and decrement the nb of steps
+            instanceCopy.i.setStartingP(new Coord(idMainCopy.i.getStartingP().getL() + 1,idMainCopy.i.getStartingP().getC()));
+            instanceCopy.i.setK(instanceCopy.i.getK()-1);
+            solution = algoFPT1(instanceCopy);
+
+            System.out.println("nb piece copy :" + instanceCopy.c);
+            if(solution != null){
+                solution.add(0,idMainCopy.i.getStartingP());
+                return solution;
+            }
         }
 
+        //Si on peux aller en à gauche
+        if(idMainCopy.i.getStartingP().getC() -1 >= 0){
 
+            InstanceDec instanceCopy = new InstanceDec(new Instance(idMainCopy.i),idMainCopy.c);
+            //Move and decrement the nb of steps
+            instanceCopy.i.setStartingP(new Coord(idMainCopy.i.getStartingP().getL(),idMainCopy.i.getStartingP().getC() -1));
+            instanceCopy.i.setK(instanceCopy.i.getK()-1);
+            solution = algoFPT1(instanceCopy);
 
+            if(solution != null){
+                solution.add(0,idMainCopy.i.getStartingP());
+                return solution;
+            }
+        }
 
+        //Si on peux aller en bas
+        if(idMainCopy.i.getStartingP().getC() + 1 > idMainCopy.i.getNbC()){
 
-
-
+            InstanceDec instanceCopy = new InstanceDec(new Instance(idMainCopy.i),idMainCopy.c);
+            //Move and decrement the nb of steps
+            instanceCopy.i.setStartingP(new Coord(idMainCopy.i.getStartingP().getL() - 1,idMainCopy.i.getStartingP().getC() +1));
+            instanceCopy.i.setK(instanceCopy.i.getK()-1);
+            solution = algoFPT1(instanceCopy);
+            if(solution != null){
+                solution.add(0,idMainCopy.i.getStartingP());
+                return solution;
+            }
+        }
 
         return null;
     }
@@ -159,8 +190,98 @@ public class Algos {
         // - même si le branchement est le même que dans algoFPT1, ne faites PAS appel à algoFPT1 (et donc il y aura de la duplication de code)
 
 
-        //à compléter
-        return null;
+        if(table.containsKey(id)){
+            System.out.println("already computed");
+            return table.get(id);
+        }
+        else{
+            boolean res = false;
+            Solution solution = null;
+            InstanceDec idMainCopy = new InstanceDec(new Instance(id.i),id.c);
+
+            //Sommes nous sur une pièce ?
+            if(idMainCopy.i.piecePresente(idMainCopy.i.getStartingP())){
+                idMainCopy.c = idMainCopy.c - 1;
+                idMainCopy.i.retirerPiece(idMainCopy.i.getStartingP());
+            }
+
+            //On a toutes les pièces
+            if(idMainCopy.c <= 0){
+                return new Solution(idMainCopy.i.getStartingP());
+            }
+
+            //On a plus de pas, retourner la courante non?
+            if(idMainCopy.i.getK() <= 0){
+                return null;
+            }
+
+            //Si on peux aller en haut
+            if(idMainCopy.i.getStartingP().getL() -1 >= 0){
+
+                InstanceDec instanceCopy = new InstanceDec(new Instance(idMainCopy.i),idMainCopy.c);
+                //Move and decrement the nb of steps
+                instanceCopy.i.setStartingP(new Coord(idMainCopy.i.getStartingP().getL() - 1,idMainCopy.i.getStartingP().getC()));
+                instanceCopy.i.setK(instanceCopy.i.getK()-1);
+                solution = algoFPT1(instanceCopy);
+                table.put(id,solution);
+
+                if(solution != null){
+                    solution.add(0,idMainCopy.i.getStartingP());
+                    return solution;
+                }
+
+
+            }
+            //Si on peux aller en bas
+            if(idMainCopy.i.getStartingP().getL() +1 < idMainCopy.i.getNbL()){
+
+                InstanceDec instanceCopy = new InstanceDec(new Instance(idMainCopy.i),idMainCopy.c);
+                //Move and decrement the nb of steps
+                instanceCopy.i.setStartingP(new Coord(idMainCopy.i.getStartingP().getL() + 1,idMainCopy.i.getStartingP().getC()));
+                instanceCopy.i.setK(instanceCopy.i.getK()-1);
+                solution = algoFPT1(instanceCopy);
+                table.put(id,solution);
+
+                if(solution != null){
+                    solution.add(0,idMainCopy.i.getStartingP());
+                    return solution;
+                }
+            }
+
+            //Si on peux aller en à gauche
+            if(idMainCopy.i.getStartingP().getC() -1 >= 0){
+
+                InstanceDec instanceCopy = new InstanceDec(new Instance(idMainCopy.i),idMainCopy.c);
+                //Move and decrement the nb of steps
+                instanceCopy.i.setStartingP(new Coord(idMainCopy.i.getStartingP().getL(),idMainCopy.i.getStartingP().getC() -1));
+                instanceCopy.i.setK(instanceCopy.i.getK()-1);
+                solution = algoFPT1(instanceCopy);
+                table.put(id,solution);
+
+                if(solution != null){
+                    solution.add(0,idMainCopy.i.getStartingP());
+                    return solution;
+                }
+            }
+
+            //Si on peux aller en bas
+            if(idMainCopy.i.getStartingP().getC() + 1 > idMainCopy.i.getNbC()){
+
+                InstanceDec instanceCopy = new InstanceDec(new Instance(idMainCopy.i),idMainCopy.c);
+                //Move and decrement the nb of steps
+                instanceCopy.i.setStartingP(new Coord(idMainCopy.i.getStartingP().getL() - 1,idMainCopy.i.getStartingP().getC() +1));
+                instanceCopy.i.setK(instanceCopy.i.getK()-1);
+                solution = algoFPT1(instanceCopy);
+                table.put(id,solution);
+
+                if(solution != null){
+                    solution.add(0,idMainCopy.i.getStartingP());
+                    return solution;
+                }
+            }
+
+            return null;
+        }
     }
 
 

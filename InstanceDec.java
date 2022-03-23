@@ -6,9 +6,11 @@ public class InstanceDec {
     public int c;
 
     public InstanceDec(Instance i, int c){
-        this.i=i;
+        //this.i= i;
+        this.i = new Instance(i);
         this.c=c;
     }
+
 
     @Override
     public boolean equals(Object o) {

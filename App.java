@@ -62,6 +62,7 @@ class App {
          **** petite instance pour jouer ******
          *************************************************/
         //une instance ou greedy n'est pas optimal
+
         boolean[][] p1 = {
                 {true, false, false, false, true},
                 {false, false, false, false, false},
@@ -69,7 +70,7 @@ class App {
         };
 
 
-        Coord sp1 = new Coord(1, 1);
+        Coord sp1 = new Coord(1, 3);
         int k1 = 6;
         Instance in1 = new Instance(p1, sp1, k1);
         System.out.println("instance in1 :\n" + in1);
@@ -81,15 +82,18 @@ class App {
         s1.add(new Coord(1,4));
         System.out.println("\n\n\nafficahge de la solution s1 :\n" + in1.toString(s1));
 
+
         Solution sg1 = Algos.greedySolver(in1);
-        Solution sfpt1 = Algos.algoFPT1(new InstanceDec(in1,3));
+        System.out.println("Algo fpt in app");
+        System.out.println(in1.getListeCoordPieces());
+        Solution sfpt1 = Algos.algoFPT1DP(new InstanceDec(in1,3), new HashMap<>());
+
         System.out.println("valeur de permut : " + in1.greedyPermut());
         //System.out.println("valeur de greedy : " + in1.evaluerSolution(sg1));
         if(sfpt1 == null)
             System.out.println("valeur de fpt :  null");
         else
             System.out.println("valeur de fpt : " + in1.evaluerSolution(sfpt1));
-
 
         /************************************************
          **** tests sur instances  plus grandes        ******
@@ -114,7 +118,7 @@ class App {
 
         // in6 : une instance que l'on configure comme on souhaite
 
-        /*boolean[][] p6 = new boolean[40][40];
+        boolean[][] p6 = new boolean[40][40];
         int[] l6 = {2,2,5,8,10,15,15,15,15,15,16,36,38,39};
         int[] c6 = {1,4,20,2,6,15,16,17,18,19,19,36,38,39};
 
@@ -125,10 +129,13 @@ class App {
         int k6 = 60;
         Instance in6 = new Instance(p6,sp6,k6);
         int sg6 = in6.evaluerSolution(Algos.greedySolver(in6));
+        Solution solutionDP = Algos.algoFPT1DP(new InstanceDec(in6,10), new HashMap<>());
+
+        /*
+        int sg6 = in6.evaluerSolution(Algos.greedySolver(in6));
         int sfpt6 = in6.evaluerSolution(Algos.algoFPT1DPClient(new InstanceDec(in6,sg6+1)));
-        System.out.println("greedy6 " + sg6 + " sfpt6 " + sfpt6);*/
-
-
+        System.out.println("greedy6 " + sg6 + " sfpt6 " + sfpt6);
+         */
         /************************************************
          **** comparaison des algos        ******
          *************************************************/
