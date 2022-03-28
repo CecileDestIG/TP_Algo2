@@ -226,7 +226,7 @@ public class Instance {
 
         for(int i = 0; i<s.size(); i++){
             if(!s.get(i).estDansPlateau(this.getNbL(), this.getNbC())){return false;}
-
+            //si pas le dernier : dernier == s.size() - 1
             if(i < s.size() - 1){
                 if(!s.get(i).estADistanceUn(s.get(i+1))){return false;}
             }
@@ -272,8 +272,7 @@ public class Instance {
      **** méthodes à fournir relatives au greedy        ******
      *************************************************/
 
-
-
+/*
     public ArrayList<Integer> greedyPermut() {
         //retourne une liste (x1,..,xp) où
         //x1 est la pièce la plus proche du point de départ
@@ -298,22 +297,71 @@ public class Instance {
         Coord lastCoord = new Coord(this.startingP);
 
         for(int i = 0; i < this.listeCoordPieces.size(); i++){
+
             for(int j = 0; j < listeCoordPiecesCopy.size(); j++){
 
                 int distance = lastCoord.distanceFrom(listeCoordPiecesCopy.get(j));
+                System.out.println(listeCoordPiecesCopy.get(j)+"distance from "+lastCoord + "  = "+distance);
                 if(localMinimumDistance > distance){
+                    System.out.println(i + "" + j);
                     localMinimumDistance = distance;
                     localMinimumIndex = j;
                 }
             }
+            System.out.println("Piece number : " + this.getPieceNumber(listeCoordPiecesCopy.get(localMinimumIndex)));
             orderedPieceList.add(this.getPieceNumber(listeCoordPiecesCopy.get(localMinimumIndex)));
             lastCoord = listeCoordPiecesCopy.get(localMinimumIndex);
             listeCoordPiecesCopy.remove(localMinimumIndex);
             localMinimumDistance = Integer.MAX_VALUE;
         }
+        System.out.println("result");
+        orderedPieceList.forEach(element -> System.out.println(element));
         return orderedPieceList;
     }
+*/
 
+    public ArrayList<Integer> greedyPermut() {
+        //retourne une liste (x1,..,xp) où
+        //x1 est la pièce la plus proche du point de départ
+        //x2 est la pièce restante la plus proche de x1
+        //x3 est la pièce restante la plus proche de x2
+        //etc
+        //Remarques :
+        // -on doit donc retourner une sequence de taille listeCoordPieces.size() (donc sequence vide (et pas null) si il n'y a pas de pièces)
+        // -si à un moment donné, lorsque l'on est sur une pièce xi, la pièce restante la plus proche de xi n'est pas unique,
+        //   alors on peut prendre n'importe quelle pièce (parmi ces plus proches de xi)
+        //par exemple,
+        //si le plateau est
+        //.s.x
+        //....
+        //x..x
+        //avec la pièce 0 en haut à droite, la pièce 1 en bas à gauche, et la pièce 2 en bas à droite,
+        //on doit retourner (0,2,1)
+        ArrayList<Integer> orderedPieceList = new ArrayList<>();
+        ArrayList<Coord> listeCoordPiecesCopy = new ArrayList<>(this.listeCoordPieces);
+        int localMinimumIndex = -1;
+        int localMinimumDistance = Integer.MAX_VALUE;
+        Coord lastCoord = new Coord(this.startingP);
+
+        while (listeCoordPiecesCopy.size() > 0){
+
+            localMinimumDistance = Integer.MAX_VALUE;
+
+            for(int i = 0; i < listeCoordPiecesCopy.size(); i++){
+
+                int distance = lastCoord.distanceFrom(listeCoordPiecesCopy.get(i));
+
+                if(localMinimumDistance > distance){
+                    localMinimumDistance = distance;
+                    localMinimumIndex = i;
+                }
+            }
+            orderedPieceList.add(this.getPieceNumber(listeCoordPiecesCopy.get(localMinimumIndex)));
+            lastCoord = listeCoordPiecesCopy.get(localMinimumIndex);
+            listeCoordPiecesCopy.remove(localMinimumIndex);
+        }
+        return orderedPieceList;
+    }
 
     public Solution calculerSol(ArrayList<Integer> permut) {
 

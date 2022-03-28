@@ -1,4 +1,6 @@
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Objects;
 
 public class ElemPermutHC implements IElemHC {
@@ -41,9 +43,7 @@ public class ElemPermutHC implements IElemHC {
         //- nbCases est le nombre de cases du plateau
         //- valSol est la valeur de la solution associée à this
         //- nbStepsTotal est le nombre de pas total qu'il faudrait pour ramasser toutes les pièces dans l'ordre de permut
-
-        // à compléter
-     return 0;
+        return this.i.getNbL() * this.i.getNbC() * this.i.evaluerSolution(this.getSol()) - this.i.nbStepsToCollectAll(this.permut);
     }
 
     public Solution getSol(){
@@ -60,10 +60,17 @@ public class ElemPermutHC implements IElemHC {
         //les objets retournés doivent être indépendant de this, et cette méthode ne doit pas modifier this
 
         //ne dois pas modifier this
+        HashSet<ElemPermutHC> voisinsImmediats = new HashSet<>();
+        ArrayList<ElemPermutHC> voisinsImmediatsList = new ArrayList<>();
+        ElemPermutHC copyPermut =  new ElemPermutHC(this);
 
-        //à compléter
-
-        return null;
+        for (int i = 0 ; i < this.permut.size() ; i++){
+            copyPermut.permut.add(copyPermut.permut.remove(i));
+            voisinsImmediats.add(new ElemPermutHC(copyPermut));
+            copyPermut =  new ElemPermutHC(this);
+        }
+        voisinsImmediatsList.addAll(voisinsImmediats);
+        return voisinsImmediatsList ;
     }
 
 
@@ -73,8 +80,25 @@ public class ElemPermutHC implements IElemHC {
         //retourne voisins (sans doublons) à une distance <= dist
         //pour dist = 1, doit retourner getVoisinsImmediats();
 
-        //à compléter
-      return null;
+        HashSet<ElemPermutHC> set = new HashSet<>();
+        ArrayList<ElemPermutHC> voisins =  new ArrayList<>();
+        voisins.addAll(set);
+        /*
+        int currDist = dist;
+        while(currDist >){
+            ge
+            set.add(new ElemPermutHC())
+        }
+
+        return set.toArray();*/
+        return null;
+    }
+
+    public HashSet<ElemPermutHC> getVoisinRec(ArrayList<ElemPermutHC> element, HashSet<ElemPermutHC> set){
+        if(dist == 1){
+            set.addAll(this.getVoisinsImmediats());
+        }
+        return null;
     }
 
 }
