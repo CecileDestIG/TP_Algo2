@@ -434,12 +434,13 @@ public class Instance {
         ArrayList<Integer> distanceBetweenPiecesList = new ArrayList<>();
         int distMin = Integer.MAX_VALUE;
 
+        /*Get shortest distance From start to a piece*/
         for(Coord pieceCoord : this.listeCoordPieces){
             if(pieceCoord.distanceFrom(this.getStartingP()) < distMin){
                 distMin = pieceCoord.distanceFrom(this.getStartingP());
             }
         }
-
+        /*Get distance between piece*/
         for(int i = 0; i<this.listeCoordPieces.size();i++){
             for(int j = i +1; j<this.listeCoordPieces.size(); j++){
                 distanceBetweenPiecesList.add(this.listeCoordPieces.get(i).distanceFrom(this.listeCoordPieces.get(j)));
@@ -451,6 +452,8 @@ public class Instance {
         /*How many piece we can reach*/
         int nbStep = 0;
         int nbOfCollectedPieces = 0;
+        System.out.println( ((this.listeCoordPieces.size() * (this.listeCoordPieces.size() - 1))/2 )+ 1);
+        System.out.println("list size : " + distanceBetweenPiecesList.size());
 
         for(int distance : distanceBetweenPiecesList){
             if(nbStep + distance <= this.getK()){

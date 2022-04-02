@@ -9,8 +9,8 @@ class HillClimbing {
         //effectue nbRestart fois l'algorithme de hillClimbing, en partant à chaque fois d'un élément donné par f
 
 
-        IElemHC currentBest = f.getRandomSol();
-        int currentBestVal = currentBest.getVal();
+        IElemHC bestElem = f.getRandomSol();
+        int bestVal = bestElem.getVal();
         IElemHC currentElement;
         int currentVal;
 
@@ -18,12 +18,12 @@ class HillClimbing {
             currentElement = f.getRandomSol();
             currentVal = currentElement.getVal();
 
-            if(currentVal> currentBestVal){
-                currentBest = currentElement;
-                currentBestVal = currentVal;
+            if(currentVal> bestVal){
+                bestElem = currentElement;
+                bestVal = currentVal;
             }
         }
-        return currentBest.getSol();
+        return bestElem.getSol();
     }
 
     public static IElemHC hillClimbing(IElemHC s){
@@ -37,6 +37,7 @@ class HillClimbing {
         IElemHC currentBest = s;
         int currentBestVal = Integer.MIN_VALUE;
         boolean trouve  = true;
+
         while (trouve){
             ArrayList<? extends IElemHC> elements = s.getVoisins();
             trouve = false;

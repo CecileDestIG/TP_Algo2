@@ -82,23 +82,17 @@ public class ElemPermutHC implements IElemHC {
 
         HashSet<ElemPermutHC> set = new HashSet<>();
         ArrayList<ElemPermutHC> voisins =  new ArrayList<>();
+        set.addAll(this.getVoisinsImmediats());
+
+        for(int i = 1; i<dist;i++){
+            for(ElemPermutHC voisin : voisins){
+                set.addAll(voisin.getVoisinsImmediats());
+            }
+        }
+
         voisins.addAll(set);
-        /*
-        int currDist = dist;
-        while(currDist >){
-            ge
-            set.add(new ElemPermutHC())
-        }
 
-        return set.toArray();*/
-        return null;
-    }
-
-    public HashSet<ElemPermutHC> getVoisinRec(ArrayList<ElemPermutHC> element, HashSet<ElemPermutHC> set){
-        if(dist == 1){
-            set.addAll(this.getVoisinsImmediats());
-        }
-        return null;
+        return voisins;
     }
 
 }
