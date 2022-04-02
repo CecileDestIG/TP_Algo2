@@ -96,7 +96,9 @@ public class Algos {
         //Rappel : si c==0, on peut retourner la solution égale au point de départ puisque l'on est pas obligé d'utiliser les k pas
         // (on peut aussi retourner une solution plus longue si on veut)
         //Remarque : quand vous aurez codé la borneSup, pensez à l'utiliser dans cet algorithme pour ajouter un cas de base
-        if(id.i.borneSup()<id.c){return null;};
+        if(id.i.borneSup()<id.c){
+            return null;
+        };
 
         boolean res = false;
         Solution solution = null;
@@ -120,7 +122,7 @@ public class Algos {
 
         //Si on peux aller en haut
         if(idMainCopy.i.getStartingP().getL() -1 >= 0){
-
+            System.out.println("haut");
             InstanceDec instanceCopy = new InstanceDec(new Instance(idMainCopy.i),idMainCopy.c);
             //Move and decrement the nb of steps
             instanceCopy.i.setStartingP(new Coord(idMainCopy.i.getStartingP().getL() - 1,idMainCopy.i.getStartingP().getC()));
@@ -133,14 +135,14 @@ public class Algos {
         }
         //Si on peux aller en bas
         if(idMainCopy.i.getStartingP().getL() +1 < idMainCopy.i.getNbL()){
-
+            System.out.println("bas");
             InstanceDec instanceCopy = new InstanceDec(new Instance(idMainCopy.i),idMainCopy.c);
             //Move and decrement the nb of steps
             instanceCopy.i.setStartingP(new Coord(idMainCopy.i.getStartingP().getL() + 1,idMainCopy.i.getStartingP().getC()));
             instanceCopy.i.setK(instanceCopy.i.getK()-1);
             solution = algoFPT1(instanceCopy);
 
-            System.out.println("nb piece copy :" + instanceCopy.c);
+            //System.out.println("nb piece copy :" + instanceCopy.c);
             if(solution != null){
                 solution.add(0,idMainCopy.i.getStartingP());
                 return solution;
@@ -149,7 +151,7 @@ public class Algos {
 
         //Si on peux aller en à gauche
         if(idMainCopy.i.getStartingP().getC() -1 >= 0){
-
+            System.out.println("gauche");
             InstanceDec instanceCopy = new InstanceDec(new Instance(idMainCopy.i),idMainCopy.c);
             //Move and decrement the nb of steps
             instanceCopy.i.setStartingP(new Coord(idMainCopy.i.getStartingP().getL(),idMainCopy.i.getStartingP().getC() -1));
@@ -163,11 +165,11 @@ public class Algos {
         }
 
         //Si on peux aller en bas
-        if(idMainCopy.i.getStartingP().getC() + 1 > idMainCopy.i.getNbC()){
-
+        if(idMainCopy.i.getStartingP().getC() + 1 < idMainCopy.i.getNbC()){
+            System.out.println("droite");
             InstanceDec instanceCopy = new InstanceDec(new Instance(idMainCopy.i),idMainCopy.c);
             //Move and decrement the nb of steps
-            instanceCopy.i.setStartingP(new Coord(idMainCopy.i.getStartingP().getL() - 1,idMainCopy.i.getStartingP().getC() +1));
+            instanceCopy.i.setStartingP(new Coord(idMainCopy.i.getStartingP().getL() ,idMainCopy.i.getStartingP().getC() +1));
             instanceCopy.i.setK(instanceCopy.i.getK()-1);
             solution = algoFPT1(instanceCopy);
             if(solution != null){
@@ -193,7 +195,7 @@ public class Algos {
 
 
         if(table.containsKey(id)){
-            System.out.println("already computed");
+            //System.out.println("already computed");
             return table.get(id);
         }
         else{
@@ -247,7 +249,7 @@ public class Algos {
                 instanceCopy.i.setK(instanceCopy.i.getK()-1);
                 solution = algoFPT1DP(instanceCopy,table);
 
-                System.out.println("nb piece copy :" + instanceCopy.c);
+                //System.out.println("nb piece copy :" + instanceCopy.c);
                 if(solution != null){
                     solution.add(0,idMainCopy.i.getStartingP());
                     table.put(id,solution);
@@ -272,11 +274,11 @@ public class Algos {
             }
 
             //Si on peux aller en bas
-            if(idMainCopy.i.getStartingP().getC() + 1 > idMainCopy.i.getNbC()){
+            if(idMainCopy.i.getStartingP().getC() + 1 < idMainCopy.i.getNbC()){
 
                 InstanceDec instanceCopy = new InstanceDec(new Instance(idMainCopy.i),idMainCopy.c);
                 //Move and decrement the nb of steps
-                instanceCopy.i.setStartingP(new Coord(idMainCopy.i.getStartingP().getL() - 1,idMainCopy.i.getStartingP().getC() +1));
+                instanceCopy.i.setStartingP(new Coord(idMainCopy.i.getStartingP().getL(),idMainCopy.i.getStartingP().getC() +1));
                 instanceCopy.i.setK(instanceCopy.i.getK()-1);
                 solution = algoFPT1DP(instanceCopy,table);
                 if(solution != null){
