@@ -395,14 +395,14 @@ public class Instance {
             }
             else{
                 int lDirection = currentPosition.getL() - this.listeCoordPieces.get(permut.get(currentGoalPieceIndex)).getL();
-                if(lDirection != 0){
+                if(lDirection != 0 && kcopy > 0){
                     currentPosition = new Coord(currentPosition.getL() - lDirection/Math.abs(lDirection), currentPosition.getC());
                     solution.add(currentPosition);
                     kcopy--;
                 }
 
                 int cDirection = currentPosition.getC() - this.listeCoordPieces.get(permut.get(currentGoalPieceIndex)).getC();
-                if(cDirection != 0){
+                if(cDirection != 0 && kcopy > 0){
                     currentPosition = new Coord(currentPosition.getL(), currentPosition.getC()- cDirection/Math.abs(cDirection));
                     solution.add(currentPosition);
                     kcopy--;
